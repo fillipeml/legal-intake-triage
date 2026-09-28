@@ -1,0 +1,43 @@
+{
+  "key": "corporate",
+  "name": "Corporate & M&A",
+  "mailbox": "corporate@lawfirm.example",
+  "intake_address": "corporate.intake@lawfirm.example",
+  "validation": "forwarder",
+  "heads": ["helena.duarte@lawfirm.example"],
+  "reply_mode": "none",
+  "deadline_scale": { "urgent": 1, "low": 3, "medium": 5, "high": 10 },
+  "complexity_sets_deadline": false,
+  "internal_review": { "enabled": true, "reviewers": ["Helena Duarte", "Igor Lima"] },
+  "board": { "plan": "corporate-advisory", "fallback_bucket": "OTHERS", "create_buckets": true },
+  "sla_reference": {},
+  "taxonomy": [
+    { "slug": "contract_drafting", "title": "Drafting of a contract or shareholders' agreement", "keywords": ["elaboração de contrato", "elaborar contrato", "elaboração do acordo", "elaborar acordo de sócios", "minuta de acordo", "minuta de contrato", "redigir o acordo"], "label": "category6", "checklist": ["Draft the instrument", "Internal review", "Deliver to the client"] },
+    { "slug": "contract_review", "title": "Review of a contract or shareholders' agreement", "keywords": ["revisão do contrato", "revisar o contrato", "revisão de contrato", "revisão do acordo", "revisar o acordo", "acordo de quotistas", "acordo de sócios"], "label": "category2", "checklist": ["Review the draft", "Internal review", "Deliver to the client"] },
+    { "slug": "corporate_act_drafting", "title": "Drafting of a corporate act", "keywords": ["elaborar ata", "elaboração da ata", "elaborar alteração contratual", "alteração do contrato social", "elaboração de ato", "constituição da empresa", "abertura da empresa"], "label": "category5", "checklist": ["Draft", "Internal review", "Deliver to the client"] },
+    { "slug": "corporate_act_review", "title": "Review of a corporate act", "keywords": ["revisar a ata", "revisão da ata", "revisar a alteração", "revisão do ato", "ata da assembleia", "junta comercial"], "label": "category9", "checklist": ["Review the document after the feedback", "Internal review", "Deliver to the client"] },
+    { "slug": "annex_drafting", "title": "Drafting of annexes", "keywords": ["elaborar anexo", "elaboração dos anexos", "anexos da operação"], "label": "category22", "checklist": ["Draft", "Internal review", "Deliver to the client"] },
+    { "slug": "annex_review", "title": "Review of annexes", "keywords": ["revisar anexo", "revisão dos anexos"], "label": "category11", "checklist": ["Review the document after the feedback", "Internal review", "Deliver to the client"] },
+    { "slug": "diagnostic_analysis", "title": "Analysis (diagnostic)", "keywords": ["due diligence", "análise societária", "análise da situação", "levantamento societário", "diagnóstico da empresa"], "label": "category7", "checklist": ["Analyse the documents", "Additional requests to the client", "Deliver to the client"] },
+    { "slug": "diagnostic_drafting", "title": "Drafting of a diagnostic", "keywords": ["elaborar diagnóstico", "elaboração do diagnóstico", "relatório de diagnóstico"], "label": "category14", "checklist": ["Draft the diagnostic", "Internal review", "Deliver to the client"] },
+    { "slug": "diagnostic_review", "title": "Review of a diagnostic", "keywords": ["revisar diagnóstico", "revisão do diagnóstico"], "label": "category15", "checklist": ["Review the diagnostic", "Internal review", "Deliver to the client"] },
+    { "slug": "notice_drafting", "title": "Drafting of a notice", "keywords": ["elaborar notificação", "elaboração da notificação", "notificar", "notificação extrajudicial"], "label": "category16", "checklist": ["Draft the notice", "Internal review", "Deliver to the client"] },
+    { "slug": "notice_review", "title": "Review of a notice", "keywords": ["revisar notificação", "revisão da notificação", "responder a notificação", "notificação recebida"], "label": "category18", "checklist": ["Review the document after the feedback", "Internal review", "Deliver to the client"] },
+    { "slug": "legal_opinion_drafting", "title": "Drafting of a legal opinion", "keywords": ["elaborar parecer", "elaboração do parecer", "legal opinion", "parecer"], "label": "category19", "checklist": ["Draft the legal opinion", "Internal review", "Deliver to the client"] },
+    { "slug": "legal_opinion_review", "title": "Review of a legal opinion", "keywords": ["revisar parecer", "revisão do parecer"], "label": "category4", "checklist": ["Review the legal opinion", "Internal review", "Deliver to the client"] },
+    { "slug": "consulting", "title": "Consulting (one-off request)", "keywords": ["consulta", "dúvida", "orientação", "esclarecimento", "gostaria de saber", "podem confirmar"], "label": "category1", "checklist": ["Analyse the documents and research", "Internal review", "Send the opinion to the client"] },
+    { "slug": "other", "title": "Other / not applicable", "keywords": [], "label": null, "checklist": [] }
+  ],
+  "lawyers": [
+    { "name": "Helena Duarte", "email": "helena.duarte@lawfirm.example", "receives_distribution": false, "specialties": "head of the area" },
+    { "name": "Igor Lima", "email": "igor.lima@lawfirm.example", "receives_distribution": true, "specialties": "M&A, shareholders' agreements" },
+    { "name": "Júlia Neves", "email": "julia.neves@lawfirm.example", "receives_distribution": true, "specialties": "corporate acts, registrations" },
+    { "name": "Lucas Pires", "email": "lucas.pires@lawfirm.example", "receives_distribution": true, "specialties": "diagnostics, legal opinions" }
+  ],
+  "clients": [
+    { "name": "Holding Beta Participações", "domains": ["holding-beta.example"], "owner": null, "lead": null },
+    { "name": "Grupo Gama", "domains": ["grupo-gama.example"], "owner": null, "lead": null },
+    { "name": "Família Delta", "emails": ["patriarca@familia-delta.example"], "owner": null, "lead": null },
+    { "name": "Indústria Ômega", "domains": ["industria-omega.example"], "owner": null, "lead": null }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "key": "advisory",
+  "name": "Business Advisory",
+  "mailbox": "advisory@lawfirm.example",
+  "intake_address": "advisory@lawfirm.example",
+  "validation": "heads",
+  "heads": ["ana.ribeiro@lawfirm.example", "bruno.costa@lawfirm.example"],
+  "reply_mode": "draft",
+  "deadline_scale": { "urgent": 1, "low": 3, "medium": 5, "high": 10 },
+  "complexity_sets_deadline": true,
+  "internal_review": { "enabled": false, "reviewers": [] },
+  "board": { "plan": "advisory-weekly", "fallback_bucket": "OTHERS", "create_buckets": true },
+  "sla_reference": { "consulting": 1, "contract_review": 4, "document_drafting": 5, "legal_opinion": 7 },
+  "taxonomy": [
+    {
+      "slug": "existing_case",
+      "title": "Existing case",
+      "keywords": ["comunicado de sentença", "sentença", "contestação", "embargos", "recurso", "apelação", "audiência", "manifestação", "petição", "intimação", "processo judicial", "processo nº", "autos"],
+      "label": "category17",
+      "checklist": ["Read the case file and the deadline", "Draft the pleading", "Internal review", "File and inform the client"]
+    },
+    {
+      "slug": "new_lawsuit",
+      "title": "New lawsuit",
+      "keywords": ["ajuizar", "ajuizamento", "entrar com ação", "propor ação", "nova ação", "judicializar", "ação judicial"],
+      "label": "category13",
+      "checklist": ["Assess the viability", "Gather documents and powers of attorney", "Draft the complaint", "Internal review", "File and inform the client"]
+    },
+    {
+      "slug": "extrajudicial_notice",
+      "title": "Extrajudicial notice",
+      "keywords": ["notificação extrajudicial", "notificação", "notificar", "inadimpl", "cobrança extrajudicial"],
+      "label": "category16",
+      "checklist": ["Gather the facts and documents", "Draft the notice", "Internal review", "Send and record the delivery"]
+    },
+    {
+      "slug": "legal_opinion",
+      "title": "Legal opinion",
+      "keywords": ["parecer", "opinião legal", "legal opinion"],
+      "label": "category19",
+      "checklist": ["Initial analysis", "Research", "Draft the opinion", "Internal review", "Deliver to the client"]
+    },
+    {
+      "slug": "contract_review",
+      "title": "Contract review",
+      "keywords": ["análise contratual", "análise de contrato", "análise do contrato", "analisar o contrato", "revisão contratual", "revisar o contrato", "revisão do contrato", "revisem o contrato", "validação", "validar", "revisar", "analisar"],
+      "label": "category2",
+      "checklist": ["Gather information", "Review the contract", "Internal review", "Final adjustments", "Deliver to the client"]
+    },
+    {
+      "slug": "document_drafting",
+      "title": "Document drafting",
+      "keywords": ["elaboração", "elaborar", "minuta", "aditivo", "distrato", "termo de", "procuração", "contrato de prestação", "redigir", "contrato"],
+      "label": "category14",
+      "checklist": ["Gather information", "Draft the document", "Internal review", "Final adjustments", "Deliver to the client"]
+    },
+    {
+      "slug": "consulting",
+      "title": "Consulting",
+      "keywords": ["consulta", "dúvida", "orientação", "esclarecimento", "consultivo", "gostaria de saber", "vocês atendem"],
+      "label": "category1",
+      "checklist": ["Initial analysis", "Research", "Answer the client"]
+    },
+    { "slug": "other", "title": "Other", "keywords": [], "label": null, "checklist": [] }
+  ],
+  "lawyers": [
+    { "name": "Ana Ribeiro", "email": "ana.ribeiro@lawfirm.example", "receives_distribution": false, "specialties": "head of the area" },
+    { "name": "Bruno Costa", "email": "bruno.costa@lawfirm.example", "receives_distribution": true, "specialties": "contracts, corporate clients" },
+    { "name": "Carla Mendes", "email": "carla.mendes@lawfirm.example", "receives_distribution": true, "specialties": "notices, collections, real estate" },
+    { "name": "Diego Souza", "email": "diego.souza@lawfirm.example", "receives_distribution": true, "specialties": "litigation support, hearings" },
+    { "name": "Elena Prado", "email": "elena.prado@lawfirm.example", "receives_distribution": true, "specialties": "consumer matters, consulting" }
+  ],
+  "clients": [
+    { "name": "Construtora Exemplo", "domains": ["construtora-exemplo.example"], "owner": "Carla Mendes", "lead": "Bruno Costa" },
+    { "name": "Incorporadora Modelo", "domains": ["incorporadora-modelo.example"], "owner": "Diego Souza", "lead": "Ana Ribeiro" },
+    { "name": "Loja Fictícia", "domains": ["loja-ficticia.example"], "owner": null, "lead": "Bruno Costa" },
+    { "name": "Startup Alfa", "domains": ["startup-alfa.example"], "emails": ["founder@alfa-founders.example"], "owner": "Elena Prado", "lead": null },
+    { "name": "Clínica Beta", "domains": ["clinica-beta.example"], "owner": null, "lead": null }
+  ]
+}
