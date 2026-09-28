@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Sign in{% endblock %}
+{% block content %}
+<div class="card" style="max-width:420px;margin:40px auto">
+  <h1>Sign in</h1>
+  <p class="sub">{% if protected %}This console is protected by a shared password.{% else %}The demo is open: say who you are so the decisions carry a name.{% endif %}</p>
+  {% if error %}<div class="bad-box">{{ error }}</div>{% endif %}
+  <form method="post" action="/sign-in">
+    <input type="hidden" name="next" value="{{ next }}">
+    <label>Your e-mail (firm's domain)</label>
+    <input type="email" name="email" placeholder="you@lawfirm.example" required autofocus>
+    {% if protected %}
+    <label>Password</label>
+    <input type="password" name="password" required>
+    {% endif %}
+    <div style="margin-top:20px"><button class="btn">Continue</button></div>
+  </form>
+</div>
+{% endblock %}

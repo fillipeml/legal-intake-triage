@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}{{ demand.subject }}{% endblock %}
+{% block content %}
+<p><a href="/cards">← cards</a></p>
+<h1>{{ demand.subject }}</h1>
+<p class="sub">{{ area.name }} · {{ demand.channel.value }} · from {{ demand.forwarded_by or demand.sender }} · received {{ demand.received_at.strftime('%d/%m/%Y %H:%M') }}{% if demand.web_link %} · <a href="{{ demand.web_link }}">original e-mail</a>{% endif %}</p>
+
+{% if outcome == 'approved' %}<div class="ok-box">Approved by {{ demand.validated_by }}. Task {{ demand.board_task_id }} due {{ demand.due_date }}{% if demand.reply_sent_to %} · reply sent to {{ demand.reply_sent_to }}{% endif %}.</div>
+{% elif outcome == 'discarded' %}<div class="ok-box">Discarded by {{ demand.validated_by }}. The demand stays in the registry.</div>
+{% elif outcome == 'already' %}<div class="bad-box">This demand was already decided by {{ demand.validated_by }}. Nothing changed.</div>
+{% elif outcome == 'who' %}<div class="bad-box">Say who is deciding: an address of the firm's domain.</div>
+{% elif outcome.startswith('error:') %}<div class="bad-box">{{ outcome[6:] }}</div>{% endif %}
+
+<div class="grid g2">
+  <div class="card">
+    <h2>What the triage prepared</h2>
+    <p>{{ demand.ai_summary }}</p>
+    <table>
+      <tr><td>Client</td><td><b>{{ demand.ai_client }}</b> <span class="badge">{{ demand.ai_client_confidence.value }} confidence</span></td></tr>
+      <tr><td>Type</td><td>{{ area.work_type(demand.ai_work_type).title if area.work_type(demand.ai_work_type) else demand.ai_work_type }}</td></tr>
+      <tr><td>Complexity</td><td>{{ demand.ai_complexity.value }} · {{ demand.ai_days }} business day{{ '' if demand.ai_days == 1 else 's' }}</td></tr>
+      <tr><td>Deadline in the text</td><td>{{ demand.ai_explicit_deadline }}</td></tr>
+      <tr><td>Lawyer</td><td><b>{{ demand.ai_lawyer }}</b> · {{ demand.ai_lawyer_rationale }}</td></tr>
+      <tr><td>Prepared by</td><td class="mono">{{ demand.triage_model }}</td></tr>
+    </table>
+    {% for n in demand.triage_notes %}<div class="note">Check: {{ n }}</div>{% endfor %}
+    <p style="margin-top:12px;color:var(--muted);font-size:12px">Card sent to {{ demand.card_recipients|join(', ') }}. The first decision wins.</p>
+  </div>
+
+  <div class="card">
+    <h2>{% if demand.status.value == 'awaiting_validation' %}Decide{% else %}Decision{% endif %}</h2>
+    {% if demand.status.value != 'awaiting_validation' %}
+    <table>
+      <tr><td>Status</td><td><span class="badge">{{ demand.status.value.replace('_',' ') }}</span> by {{ demand.validated_by }} at {{ demand.decided_at.strftime('%d/%m/%Y %H:%M') if demand.decided_at else '' }}</td></tr>
+      <tr><td>Client</td><td>{{ demand.final_client }}</td></tr>
+      <tr><td>Type</td><td>{{ demand.final_work_type }}</td></tr>
+      <tr><td>Lawyer</td><td>{{ demand.final_lawyer }}</td></tr>
+      <tr><td>Deadline</td><td>{{ demand.final_complexity.value if demand.final_complexity else '' }} · {{ demand.final_days }} business days{% if demand.reviewer %} + {{ demand.review_days }} for the internal review by {{ demand.reviewer }}{% endif %} → {{ demand.due_date or '' }}</td></tr>
+      <tr><td>Task</td><td class="mono">{{ demand.board_task_id or '' }}</td></tr>
+      <tr><td>Adjusted</td><td>{{ 'yes' if demand.adjusted else 'no' }}</td></tr>
+      {% if demand.closed_via %}<tr><td>Closed</td><td>via {{ demand.closed_via.value }} at {{ demand.closed_at.strftime('%d/%m/%Y %H:%M') if demand.closed_at else '' }}</td></tr>{% endif %}
+    </table>
+    {% else %}
+    <form method="post" action="/cards/{{ demand.id }}">
+      {% if not user %}
+      <label>Deciding as (e-mail)</label>
+      <input type="email" name="validated_by" value="{{ default_by }}" required>
+      {% endif %}
+      <label>Client</label>
+      <select name="client">
+        {% for c in area.clients %}<option value="{{ c.name }}" {% if c.name == demand.ai_client %}selected{% endif %}>{{ c.name }}</option>{% endfor %}
+        <option value="{{ not_identified }}" {% if demand.ai_client == not_identified %}selected{% endif %}>{{ not_identified }}</option>
+      </select>
+      <label>Client not listed (type the name)</label>
+      <input type="text" name="client_other" placeholder="leave empty to keep the choice above">
+      <label>Work type</label>
+      <select name="work_type">{% for t in area.taxonomy %}<option value="{{ t.slug }}" {% if t.slug == demand.ai_work_type %}selected{% endif %}>{{ t.title }}</option>{% endfor %}</select>
+      <label>Responsible lawyer</label>
+      <select name="lawyer">{% for lw in area.lawyers %}<option value="{{ lw.name }}" {% if lw.name == demand.ai_lawyer %}selected{% endif %}>{{ lw.name }}</option>{% endfor %}<option value="{{ not_identified }}" {% if demand.ai_lawyer == not_identified %}selected{% endif %}>{{ not_identified }}</option></select>
+      <label>Complexity{% if area.complexity_sets_deadline %} (sets the deadline){% endif %}</label>
+      <select name="complexity">{% for v, title, days in complexities %}<option value="{{ v }}" {% if v == demand.ai_complexity.value %}selected{% endif %}>{{ title }}{% if area.complexity_sets_deadline %} ({{ days }} business day{{ '' if days == 1 else 's' }}){% endif %}</option>{% endfor %}</select>
+      <label>Deadline for the client (business days)</label>
+      <input type="number" name="days" min="1" value="{{ demand.ai_days }}">
+      {% if area.internal_review.enabled %}
+      <label>Internal review</label>
+      <select name="reviewer"><option value="">No review</option>{% for r in area.internal_review.reviewers %}<option value="{{ r }}">{{ r }}</option>{% endfor %}</select>
+      <label>Internal deadline (business days, added to the client's)</label>
+      <input type="number" name="review_days" min="0" value="0">
+      {% endif %}
+      {% if area.reply_mode != 'none' %}
+      <label>Reply to the client ({{ 'sent from the area mailbox' if area.reply_mode == 'send' else 'a draft for the team mailbox' }})</label>
+      <textarea name="reply">{{ demand.ai_reply_draft }}</textarea>
+      <p style="font-size:12px;color:var(--muted);margin:4px 0 0">[DUE_DATE] becomes the exact business date at approval. The reply goes to the original sender only, never to an address the model chose, and not at all for forwarded or form-registered demands.</p>
+      {% endif %}
+      <div style="display:flex;gap:10px;margin-top:20px">
+        <button class="btn" name="action" value="approve">Approve</button>
+        <button class="btn bad" name="action" value="discard">Discard</button>
+      </div>
+    </form>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

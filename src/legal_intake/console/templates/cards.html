@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Cards{% endblock %}
+{% block content %}
+<h1>Decision cards</h1>
+<p class="sub">Every demand the triage prepared and nobody has decided yet. The card also reaches the deciders by e-mail, in the demand's own thread.</p>
+{% if not pending %}
+<div class="card"><p style="margin:0;color:var(--muted)">Nothing awaiting a decision.</p></div>
+{% endif %}
+{% for d in pending %}
+<div class="card">
+  <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+    <div>
+      <span class="badge accent">{{ areas[d.area].name if d.area in areas else d.area }}</span>
+      <span class="badge">{{ d.channel.value }}</span>
+      {% if d.forwarded_by %}<span class="badge" title="registered by a lawyer">forwarded by {{ d.forwarded_by }}</span>{% endif %}
+      <h2 style="border:0;padding:0;margin:8px 0 4px;text-transform:none;letter-spacing:0;font-size:15px"><a href="/cards/{{ d.id }}">{{ d.subject }}</a></h2>
+      <p style="margin:0;color:var(--muted)">{{ d.ai_summary }}</p>
+      <p class="mono" style="margin:6px 0 0;color:var(--muted)">{{ d.ai_client }} · {{ d.ai_work_type }} · {{ d.ai_complexity.value }} · {{ d.ai_days }} business day{{ '' if d.ai_days == 1 else 's' }} · {{ d.ai_lawyer }} · card sent to {{ d.card_recipients|join(', ') }}</p>
+    </div>
+    <a class="btn" href="/cards/{{ d.id }}">Decide</a>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

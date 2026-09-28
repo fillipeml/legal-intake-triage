@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1>Dashboard</h1>
+<p class="sub">Data as of {{ metrics.as_of }} · {{ pending|length }} demand{{ '' if pending|length == 1 else 's' }} awaiting a decision{% if pending %} · <a href="/cards">open the cards</a>{% endif %}</p>
+
+{% for m in metrics.areas %}
+<div class="card">
+  <h2>{{ m.name }}</h2>
+  <div class="grid g4" style="margin-bottom:16px">
+    <div class="kpi"><div class="v">{{ m.demands }}</div><div class="l">demands</div></div>
+    <div class="kpi"><div class="v">{% if m.adjustment_rate is not none %}{{ (m.adjustment_rate * 100)|round|int }}%{% else %}–{% endif %}</div><div class="l">adjustment rate ({{ m.adjusted }}/{{ m.decided }})</div></div>
+    <div class="kpi"><div class="v">{% if m.hours_to_decision_avg is not none %}{{ m.hours_to_decision_avg }}h{% else %}–{% endif %}</div><div class="l">average time to decision</div></div>
+    <div class="kpi"><div class="v">{{ m.replied_same_day }}/{{ m.replied_total }}</div><div class="l">replied the same day</div></div>
+    <div class="kpi"><div class="v">{{ m.done_on_time }}/{{ m.done_on_time + m.done_late }}</div><div class="l">closed on time</div></div>
+    <div class="kpi"><div class="v">{{ m.overdue }}</div><div class="l">overdue now</div></div>
+    <div class="kpi"><div class="v">{% if gaps[m.key] is not none %}{{ (gaps[m.key] * 100)|round|int }}%{% else %}–{% endif %}</div><div class="l">closed from the board (no reply date)</div></div>
+    <div class="kpi"><div class="v">{{ m.by_status.get('awaiting_validation', 0) }}</div><div class="l">awaiting validation</div></div>
+  </div>
+  <div class="grid g2">
+    <div>
+      <h2 style="border:0;padding:0;margin-bottom:6px">Open tasks by lawyer</h2>
+      {% set mx = (m.open_by_lawyer.values()|list + [1])|max %}
+      {% for name, n in m.open_by_lawyer.items() %}
+      <div class="bar"><span class="n">{{ name }}</span><span class="t"><span class="m" style="width:{{ (n / mx * 100)|round }}%"></span></span><span class="c">{{ n }}</span></div>
+      {% endfor %}
+    </div>
+    <div>
+      <h2 style="border:0;padding:0;margin-bottom:6px">Demands by type</h2>
+      {% set mx = (m.by_type.values()|list + [1])|max %}
+      {% for name, n in m.by_type.items()|sort(attribute=1, reverse=true) %}
+      <div class="bar"><span class="n">{{ name }}</span><span class="t"><span class="m" style="width:{{ (n / mx * 100)|round }}%"></span></span><span class="c">{{ n }}</span></div>
+      {% endfor %}
+    </div>
+    <div>
+      <h2 style="border:0;padding:0;margin-bottom:6px">Demands by client</h2>
+      {% set mx = (m.by_client.values()|list + [1])|max %}
+      {% for name, n in m.by_client.items()|sort(attribute=1, reverse=true) %}
+      <div class="bar"><span class="n">{{ name }}</span><span class="t"><span class="m" style="width:{{ (n / mx * 100)|round }}%"></span></span><span class="c">{{ n }}</span></div>
+      {% endfor %}
+    </div>
+    <div>
+      <h2 style="border:0;padding:0;margin-bottom:6px">Adjusted fields · channels · closing</h2>
+      <p style="margin:4px 0">{% for f, n in m.adjusted_fields.items() %}<span class="badge warn">{{ f }} {{ n }}</span> {% else %}<span class="badge ok">no adjustment yet</span>{% endfor %}</p>
+      <p style="margin:4px 0">{% for f, n in m.by_channel.items() %}<span class="badge">{{ f }} {{ n }}</span> {% endfor %}</p>
+      <p style="margin:4px 0">{% for f, n in m.closed_via.items() %}<span class="badge {{ 'ok' if f == 'email' else 'warn' }}">closed via {{ f }} {{ n }}</span> {% endfor %}</p>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+<div class="card">
+  <h2>Recent demands</h2>
+  <table>
+    <tr><th>Received</th><th>Area</th><th>Subject</th><th>Client</th><th>Lawyer</th><th>Status</th><th>Due</th></tr>
+    {% for d in recent %}
+    <tr>
+      <td class="mono">{{ d.received_at.strftime('%d/%m %H:%M') }}</td>
+      <td>{{ areas[d.area].name if d.area in areas else d.area }}</td>
+      <td><a href="/cards/{{ d.id }}">{{ d.subject }}</a></td>
+      <td>{{ d.final_client or d.ai_client }}</td>
+      <td>{{ d.final_lawyer or d.ai_lawyer }}</td>
+      <td><span class="badge {{ {'awaiting_validation':'accent','in_execution':'warn','done':'ok','discarded':''}[d.status.value] }}">{{ d.status.value.replace('_',' ') }}</span>{% if d.adjusted %} <span class="badge warn" title="the person changed at least one suggestion">adjusted</span>{% endif %}</td>
+      <td class="mono">{{ d.due_date or '' }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}
