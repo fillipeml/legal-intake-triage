@@ -1,0 +1,55 @@
+[project]
+name = "legal-intake-triage"
+version = "0.1.0"
+description = "Front door for a law firm's practice areas: demands arrive by e-mail or a form, a language model prepares a decision package, a person approves it on a card, and the approval creates the task, the record and the client reply; with deterministic guards, an adjustment-rate metric and an SLA matrix from the board's history"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+authors = [{ name = "Fillipe Loose" }]
+keywords = ["legal-tech", "intake", "triage", "microsoft-graph", "claude-api", "human-in-the-loop"]
+dependencies = [
+  "pydantic[email]>=2.7,<3",
+  "pydantic-settings>=2.3,<3",
+  "httpx>=0.27,<1",
+  "msal>=1.28,<2",
+  "anthropic>=1.8",
+  "jinja2>=3.1,<4",
+  "holidays>=0.50",
+  "tzdata>=2024.1",
+  "fastapi>=0.115",
+  "uvicorn>=0.30",
+  "python-multipart>=0.0.9",
+  "itsdangerous>=2.2",
+]
+
+[project.scripts]
+intake = "legal_intake.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/legal_intake"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "N"]
+
+[tool.ruff.lint.pycodestyle]
+max-line-length = 130
+
+[tool.ruff.lint.per-file-ignores]
+# the prompt is prose inside one template string; wrapping it would fragment the text
+"src/legal_intake/triage/prompts.py" = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"
