@@ -1,0 +1,98 @@
+{
+  "m01": {
+    "client": "Construtora Exemplo",
+    "client_confidence": "high",
+    "work_type": "contract_review",
+    "summary": "Construtora Exemplo asks for the review of a materials supply contract with a new supplier before signature next week, with attention to the late-delivery penalty and the price-adjustment clause. The draft is attached.",
+    "suggested_lawyer": "Carla Mendes",
+    "lawyer_rationale": "portfolio owner of Construtora Exemplo",
+    "complexity": "medium",
+    "suggested_days": 5,
+    "explicit_deadline": "signature planned for next week",
+    "reply_draft": "Prezados,\n\nConfirmamos o recebimento da solicitação de revisão do contrato de fornecimento de materiais com o novo fornecedor, com atenção à multa por atraso e à cláusula de reajuste. Nossa equipe já está analisando a minuta e retornaremos até [DUE_DATE], antes da assinatura prevista.\n\nPermanecemos à disposição.\n\nEquipe Business Advisory — Example Law Firm"
+  },
+  "m02": {
+    "client": "Not identified",
+    "client_confidence": "low",
+    "work_type": "document_drafting",
+    "summary": "A company that calls itself Empresa Nova, referred by a partner, asks for a services agreement between the company and a self-employed consultant. No deadline was given.",
+    "suggested_lawyer": "Elena Prado",
+    "lawyer_rationale": "lowest current load in the area (2 open tasks)",
+    "complexity": "medium",
+    "suggested_days": 5,
+    "explicit_deadline": "Not identified",
+    "reply_draft": "Prezado Marcos,\n\nConfirmamos o recebimento da sua solicitação de elaboração de contrato de prestação de serviços de consultoria. Nossa equipe fará a análise inicial e retornaremos até [DUE_DATE] com os próximos passos.\n\nPermanecemos à disposição.\n\nEquipe Business Advisory — Example Law Firm"
+  },
+  "m03": {
+    "client": "Loja Fictícia",
+    "client_confidence": "high",
+    "work_type": "extrajudicial_notice",
+    "summary": "Loja Fictícia, through Carla Mendes, wants an extrajudicial notice sent to a supplier in default for two months, before any judicial measure.",
+    "suggested_lawyer": "Carla Mendes",
+    "lawyer_rationale": "the lawyer who forwarded the demand owns the relationship",
+    "complexity": "medium",
+    "suggested_days": 5,
+    "explicit_deadline": "Not identified",
+    "reply_draft": "Prezados,\n\nConfirmamos o recebimento da solicitação de notificação extrajudicial ao fornecedor inadimplente. Nossa equipe reunirá os documentos necessários e retornaremos até [DUE_DATE] com a minuta.\n\nPermanecemos à disposição.\n\nEquipe Business Advisory — Example Law Firm"
+  },
+  "m04": {
+    "client": "Clínica Beta",
+    "client_confidence": "medium",
+    "work_type": "consulting",
+    "summary": "Clínica Beta, registered by Diego Souza from a WhatsApp contact, wants quick guidance on the renewal and price-adjustment clauses of a commercial lease proposal before answering the landlord.",
+    "suggested_lawyer": "Diego Souza",
+    "lawyer_rationale": "the lawyer who registered the demand owns the relationship",
+    "complexity": "low",
+    "suggested_days": 3,
+    "explicit_deadline": "Not identified",
+    "reply_draft": "Prezados,\n\nConfirmamos o recebimento da consulta sobre as cláusulas de renovação e reajuste da proposta de locação. Retornaremos até [DUE_DATE] com a orientação.\n\nPermanecemos à disposição.\n\nEquipe Business Advisory — Example Law Firm"
+  },
+  "m09": {
+    "client": "Incorporadora Modelo",
+    "client_confidence": "high",
+    "work_type": "existing_case",
+    "summary": "Incorporadora Modelo needs guidance on a settlement proposal for case 0001234-31.2099.8.26.0100: the conciliation hearing was brought forward to tomorrow at 14h and the answer is needed by the end of today.",
+    "suggested_lawyer": "Diego Souza",
+    "lawyer_rationale": "portfolio owner of Incorporadora Modelo",
+    "complexity": "urgent",
+    "suggested_days": 1,
+    "explicit_deadline": "hearing tomorrow at 14h; guidance by the end of today",
+    "reply_draft": "Prezados,\n\nConfirmamos o recebimento da solicitação de orientação sobre a proposta de acordo para a audiência de conciliação antecipada. Já estamos analisando o caso e retornaremos até [DUE_DATE].\n\nPermanecemos à disposição.\n\nEquipe Business Advisory — Example Law Firm"
+  },
+  "m12": {
+    "client": "Holding Beta Participações",
+    "client_confidence": "high",
+    "work_type": "contract_drafting",
+    "summary": "Holding Beta Participações, through Igor Lima, asks for a shareholders' agreement for a new holding with three partners, including tag-along, drag-along and non-compete clauses; the incorporation meeting is in three weeks.",
+    "suggested_lawyer": "Igor Lima",
+    "lawyer_rationale": "the lawyer who forwarded the demand owns the relationship",
+    "complexity": "high",
+    "suggested_days": 10,
+    "explicit_deadline": "incorporation meeting in three weeks",
+    "reply_draft": "Prezados,\n\nConfirmamos o recebimento da solicitação de elaboração do acordo de sócios da nova holding, com as cláusulas de tag along, drag along e não concorrência. Retornaremos até [DUE_DATE] com a minuta para a reunião de constituição.\n\nPermanecemos à disposição.\n\nEquipe Corporate & M&A — Example Law Firm"
+  },
+  "m13": {
+    "client": "Grupo Gama",
+    "client_confidence": "high",
+    "work_type": "corporate_act_drafting",
+    "summary": "Grupo Gama wants the amendment of the articles of association of Gama Serviços to admit a new partner, by the end of the month.",
+    "suggested_lawyer": "Júlia Neves",
+    "lawyer_rationale": "lowest current load in the area (2 open tasks); corporate acts are her specialty",
+    "complexity": "medium",
+    "suggested_days": 5,
+    "explicit_deadline": "by the end of the month",
+    "reply_draft": "Prezados,\n\nConfirmamos o recebimento da solicitação de alteração do contrato social da Gama Serviços para a admissão do novo sócio. Retornaremos até [DUE_DATE] com a minuta.\n\nPermanecemos à disposição.\n\nEquipe Corporate & M&A — Example Law Firm"
+  },
+  "m14": {
+    "client": "Not identified",
+    "client_confidence": "low",
+    "work_type": "other",
+    "summary": "Marketing e-mail offering legal software at a discount; not a legal demand.",
+    "suggested_lawyer": "Not identified",
+    "lawyer_rationale": "not a demand: no lawyer to suggest",
+    "complexity": "low",
+    "suggested_days": 3,
+    "explicit_deadline": "Not identified",
+    "reply_draft": "Prezados,\n\nConfirmamos o recebimento da sua mensagem e retornaremos até [DUE_DATE].\n\nPermanecemos à disposição.\n\nEquipe Business Advisory — Example Law Firm"
+  }
+}

@@ -1,0 +1,173 @@
+{
+  "_note": "The intake mailbox of the demo, built around Monday 2026-09-21. Every party, address and case number is invented (.example domains, case numbers dated 2099 with invalid check digits). Each message exercises one route of the sweep.",
+  "messages": [
+    {
+      "id": "m01",
+      "conversation_id": "conv-m01",
+      "sender": "financeiro@construtora-exemplo.example",
+      "to": ["advisory@lawfirm.example"],
+      "cc": [],
+      "subject": "Revisão de contrato de fornecimento — Construtora Exemplo",
+      "body": "Prezados, boa tarde.\n\nPrecisamos que revisem o contrato de fornecimento de materiais com um novo fornecedor antes da assinatura, prevista para a próxima semana. Minuta em anexo. Pontos de atenção: multa por atraso na entrega e cláusula de reajuste.\n\nAtenciosamente,\nDepartamento Financeiro — Construtora Exemplo",
+      "received_at": "2026-09-18T10:12:00-03:00",
+      "web_link": "https://outlook.example/m01",
+      "has_attachments": true
+    },
+    {
+      "id": "m02",
+      "conversation_id": "conv-m02",
+      "sender": "contato@empresa-nova.example",
+      "to": ["advisory@lawfirm.example"],
+      "cc": [],
+      "subject": "Elaboração de contrato de prestação de serviços",
+      "body": "Olá, fomos indicados por um parceiro de vocês. Somos a Empresa Nova e precisamos elaborar um contrato de prestação de serviços de consultoria entre a empresa e um profissional autônomo. Podem ajudar? Não há prazo definido.\n\nAtenciosamente,\nMarcos — Empresa Nova",
+      "received_at": "2026-09-18T11:40:00-03:00",
+      "web_link": "https://outlook.example/m02",
+      "has_attachments": false
+    },
+    {
+      "id": "m03",
+      "conversation_id": "conv-m03",
+      "sender": "carla.mendes@lawfirm.example",
+      "to": ["advisory@lawfirm.example"],
+      "cc": [],
+      "subject": "ENC: Notificação de inadimplência — Loja Fictícia",
+      "body": "Encaminho a demanda abaixo, recebida no meu e-mail.\n\n---------- Mensagem encaminhada ----------\nDe: juridico@loja-ficticia.example\nAssunto: Notificação de inadimplência\n\nDra. Carla, bom dia. Um dos nossos fornecedores está inadimplente há dois meses e queremos enviar uma notificação extrajudicial antes de qualquer medida judicial. Podem redigir?\n\nJurídico — Loja Fictícia",
+      "received_at": "2026-09-18T14:05:00-03:00",
+      "web_link": "https://outlook.example/m03",
+      "has_attachments": false
+    },
+    {
+      "id": "m04",
+      "conversation_id": "conv-m04",
+      "sender": "intake@lawfirm.example",
+      "to": ["advisory@lawfirm.example"],
+      "cc": [],
+      "subject": "[Forms/WhatsApp] Demanda registrada por diego.souza@lawfirm.example",
+      "body": "Cliente: Clínica Beta\nCanal: WhatsApp\nUrgência: Média\nResumo: A clínica recebeu uma proposta de locação de sala comercial e quer uma orientação rápida sobre a cláusula de renovação e o reajuste antes de responder ao locador.",
+      "received_at": "2026-09-19T09:30:00-03:00",
+      "web_link": "https://outlook.example/m04",
+      "has_attachments": false
+    },
+    {
+      "id": "m05",
+      "conversation_id": "conv-m05",
+      "sender": "ana.ribeiro@lawfirm.example",
+      "to": ["advisory@lawfirm.example"],
+      "cc": [],
+      "subject": "Reunião de alinhamento da área — quinta",
+      "body": "Pessoal, reunião quinta às 10h para alinhar a semana.",
+      "received_at": "2026-09-19T10:00:00-03:00",
+      "web_link": "https://outlook.example/m05",
+      "has_attachments": false
+    },
+    {
+      "id": "m06",
+      "conversation_id": "conv-m06",
+      "sender": "noreply@boletim-juridico.example",
+      "to": ["advisory@lawfirm.example"],
+      "cc": [],
+      "subject": "Boletim semanal: novidades legislativas",
+      "body": "Confira as novidades da semana.",
+      "received_at": "2026-09-19T11:00:00-03:00",
+      "web_link": "https://outlook.example/m06",
+      "has_attachments": false
+    },
+    {
+      "id": "m07",
+      "conversation_id": "conv-m07",
+      "sender": "compras@construtora-exemplo.example",
+      "to": ["advisory@lawfirm.example"],
+      "cc": [],
+      "subject": "Resposta Automática: fora do escritório",
+      "body": "Estou fora do escritório até o dia 25.",
+      "received_at": "2026-09-19T11:30:00-03:00",
+      "web_link": "https://outlook.example/m07",
+      "has_attachments": false
+    },
+    {
+      "id": "m08",
+      "conversation_id": "conv-m01",
+      "sender": "financeiro@construtora-exemplo.example",
+      "to": ["advisory@lawfirm.example"],
+      "cc": [],
+      "subject": "RE: Revisão de contrato de fornecimento — Construtora Exemplo",
+      "body": "Segue mais um documento do fornecedor.",
+      "received_at": "2026-09-19T15:20:00-03:00",
+      "web_link": "https://outlook.example/m08",
+      "has_attachments": true
+    },
+    {
+      "id": "m09",
+      "conversation_id": "conv-m09",
+      "sender": "juridico@incorporadora-modelo.example",
+      "to": ["advisory@lawfirm.example"],
+      "cc": [],
+      "subject": "URGENTE: audiência amanhã — processo nº 0001234-31.2099.8.26.0100",
+      "body": "Prezados, a audiência de conciliação do processo nº 0001234-31.2099.8.26.0100 foi antecipada para amanhã às 14h e precisamos de orientação sobre a proposta de acordo até o fim do dia de hoje.\n\nJurídico — Incorporadora Modelo",
+      "received_at": "2026-09-21T08:05:00-03:00",
+      "web_link": "https://outlook.example/m09",
+      "has_attachments": false
+    },
+    {
+      "id": "m10",
+      "conversation_id": "conv-seed-1",
+      "sender": "carla.mendes@lawfirm.example",
+      "to": ["cliente@construtora-exemplo.example"],
+      "cc": ["intake@lawfirm.example"],
+      "subject": "RE: Aditivo ao contrato de empreitada",
+      "body": "Prezados, segue o aditivo revisado, com as cláusulas de prazo e de multa ajustadas conforme conversamos.\n\nCarla Mendes",
+      "received_at": "2026-09-19T17:45:00-03:00",
+      "web_link": "https://outlook.example/m10",
+      "has_attachments": true
+    },
+    {
+      "id": "m11",
+      "conversation_id": "conv-seed-2",
+      "sender": "contato@startup-alfa.example",
+      "to": ["advisory@lawfirm.example"],
+      "cc": [],
+      "subject": "RE: Dúvida sobre vesting dos sócios",
+      "body": "Obrigado, aguardamos o retorno.",
+      "received_at": "2026-09-19T18:00:00-03:00",
+      "web_link": "https://outlook.example/m11",
+      "has_attachments": false
+    },
+    {
+      "id": "m12",
+      "conversation_id": "conv-m12",
+      "sender": "igor.lima@lawfirm.example",
+      "to": ["corporate.intake@lawfirm.example"],
+      "cc": [],
+      "subject": "ENC: Acordo de sócios — Holding Beta",
+      "body": "Encaminho para registro.\n\n---------- Mensagem encaminhada ----------\nDe: diretoria@holding-beta.example\nAssunto: Acordo de sócios\n\nIgor, precisamos elaborar o acordo de sócios da nova holding com três sócios, com cláusulas de tag along, drag along e não concorrência. A assembleia de constituição está marcada para daqui a três semanas.\n\nDiretoria — Holding Beta Participações",
+      "received_at": "2026-09-21T08:20:00-03:00",
+      "web_link": "https://outlook.example/m12",
+      "has_attachments": false
+    },
+    {
+      "id": "m13",
+      "conversation_id": "conv-m13",
+      "sender": "ceo@grupo-gama.example",
+      "to": ["corporate.intake@lawfirm.example"],
+      "cc": [],
+      "subject": "Alteração do contrato social — Gama Serviços",
+      "body": "Bom dia. Precisamos incluir um novo sócio e alterar o contrato social da Gama Serviços até o fim do mês. Podem elaborar a alteração contratual?\n\nCEO — Grupo Gama",
+      "received_at": "2026-09-21T08:25:00-03:00",
+      "web_link": "https://outlook.example/m13",
+      "has_attachments": false
+    },
+    {
+      "id": "m14",
+      "conversation_id": "conv-m14",
+      "sender": "promo@ofertas-marketing.example",
+      "to": ["advisory@lawfirm.example"],
+      "cc": [],
+      "subject": "Oferta imperdível de software jurídico",
+      "body": "Assine hoje com 50% de desconto e transforme a gestão do seu escritório!",
+      "received_at": "2026-09-19T12:00:00-03:00",
+      "web_link": "https://outlook.example/m14",
+      "has_attachments": false
+    }
+  ]
+}
