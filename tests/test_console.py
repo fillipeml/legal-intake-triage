@@ -109,3 +109,32 @@ def test_password_gate(services):
     assert "ana.ribeiro@lawfirm.example" in client.get("/cards").text
     client.post("/sign-out")
     assert client.get("/", follow_redirects=False).status_code == 303
+
+
+def test_sign_in_does_not_redirect_off_site(services):
+    """`next` is attacker-supplied: it rides in the URL of the link the user clicked.
+
+    The guard accepted anything beginning with "/", which includes "//evil.example/x" — a
+    protocol-relative URL that the browser resolves to another host. A sign-in page that
+    lands the user on someone else's site, having just taken their password, is the shape
+    every credential-phishing flow wants.
+    """
+    services.settings.console_password = "pw"
+    services.settings.console_secret = "signing"
+    client = TestClient(create_app(services))
+
+    for hostile in ("//evil.example/phish", "///evil.example", "//evil.example"):
+        response = client.post(
+            "/sign-in",
+            data={"email": "ana.ribeiro@lawfirm.example", "password": "pw", "next": hostile},
+            follow_redirects=False,
+        )
+        assert response.status_code == 303
+        assert response.headers["location"] == "/", hostile
+
+    ok = client.post(
+        "/sign-in",
+        data={"email": "ana.ribeiro@lawfirm.example", "password": "pw", "next": "/cards"},
+        follow_redirects=False,
+    )
+    assert ok.headers["location"] == "/cards"

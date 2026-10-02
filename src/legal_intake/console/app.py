@@ -69,7 +69,10 @@ def create_app(services: Services) -> FastAPI:
             return render(
                 "sign_in.html", request, next=next, error="Use an address of the firm's domain."
             )
-        response = RedirectResponse(next if next.startswith("/") else "/", status_code=303)
+        # "//evil.example/..." starts with "/" and is a protocol-relative URL that the
+        # browser resolves to another host, so the single-slash test was an open redirect.
+        safe_next = next if next.startswith("/") and not next.startswith("//") else "/"
+        response = RedirectResponse(safe_next, status_code=303)
         response.set_cookie(COOKIE, signer.dumps({"email": email}), httponly=True, samesite="lax")
         return response
 
