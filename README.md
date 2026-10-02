@@ -15,7 +15,9 @@ Sweep of 2026-09-21 | mode: DEMO | messages=14 already_processed=0 skipped=3 dup
   closed:     d-seed-1 closed by the reply of carla.mendes@lawfirm.example
   card:       d-0f44ab69 -> bruno.costa@lawfirm.example  (Revisão de contrato de fornecimento — Construtora Exemplo)
   card:       d-634ff991 -> ana.ribeiro@lawfirm.example, bruno.costa@lawfirm.example  (Elaboração de contrato de prestação de serviços)
+  card:       d-8ddef8e8 -> bruno.costa@lawfirm.example  (ENC: Notificação de inadimplência — Loja Fictícia)
   card:       d-6b6eb101 -> diego.souza@lawfirm.example  ([Forms/WhatsApp] Demanda registrada por diego.souza@lawfirm.example)
+  card:       d-e68250dc -> ana.ribeiro@lawfirm.example, bruno.costa@lawfirm.example  (Oferta imperdível de software jurídico)
   card:       d-3cb294d4 -> ana.ribeiro@lawfirm.example  (URGENTE: audiência amanhã — processo nº 0001234-31.2099.8.26.0100)
   card:       d-13aeee51 -> igor.lima@lawfirm.example  (ENC: Acordo de sócios — Holding Beta)
   card:       d-b254e964 -> helena.duarte@lawfirm.example  (Alteração do contrato social — Gama Serviços)
@@ -84,7 +86,7 @@ flowchart LR
 
 - **Generated:** the original flows, prompts, schemas and cards were written with an AI coding assistant during a two-month pilot (July to September 2026); this coded rebuild was produced with the same assistant, and the adapters, the rules-based baseline, the fixture inbox, the console and the test suite were introduced in the process.
 - **Rewritten by me:** the routing and anti-loop rules that the pilot's incidents dictated (a forward is a demand, a plain internal e-mail is not; the form's responder gets the card; an external sender on the corporate list goes to the head); the distribution order and its enforcement in code; the two closing paths and the adherence gap; the recipient guard.
-- **Validated:** 49 tests run offline over the fixture inbox on a temporary SQLite file, including the console's routes; the evaluation script checks every route and every recipient and measures the baseline against the recorded readings; the SDK call shape (structured output through the schema, cached system block, thinking off) was kept from the pilot's tested request body.
+- **Validated:** 51 tests run offline over the fixture inbox on a temporary SQLite file, including the console's routes; the evaluation script checks every route and measures the baseline against the recorded readings, and the suite checks every card recipient; the SDK call shape (structured output through the schema, cached system block, thinking off) was kept from the pilot's tested request body.
 - **Rejected designs:** monitoring the lawyers' personal inboxes (privacy, cost, false positives) in favour of the one-click forward; sending the acknowledgement for forwarded demands (a second contact the lawyer did not ask for); closing a demand on any internal reply in the thread (only the copy to the intake account closes it, with the real date); letting the model choose the deadline (the complexity scale does, unless the text carries a shorter one).
 - **Commits:** made with an AI coding assistant; attribution trailers are omitted and AI usage is documented here.
 
@@ -92,7 +94,8 @@ flowchart LR
 
 | What | Result | Set |
 |---|---|---|
-| Routes of the fixture inbox | 14 of 14 as designed; every card recipient on the firm's domain | `scripts/eval.py` |
+| Routes of the fixture inbox | 14 of 14 as designed | `scripts/eval.py` |
+| Card recipients | every card goes to a lawyer of the area, never to the sender | `tests/test_storage_cards_sla.py` |
 | Keyword baseline vs recorded readings | client 8/8, work type 7/8, lawyer 7/8, complexity 6/8, days 6/8 | the 8 demands of the inbox |
 | Corrections the checks make to the recorded readings | 1 (a marketing e-mail with no lawyer gets the load rule) | same |
 | Model accuracy on real demands | not measured here; the production metric is the adjustment rate, targeted under 20% in the pilot | — |
@@ -101,7 +104,7 @@ The recorded readings are hand-written expectations that stand in for the model 
 
 ## Cost & latency
 
-One model call per demand: a stable system prompt per area of roughly four to five thousand tokens, cached after the first call, plus the message and the lawyers' load in the user turn, and a short structured answer. Cents per demand at Sonnet-tier list prices, a few seconds per call. The sweep runs every fifteen minutes on business hours and a card reaches the decider within that window (the original's flow took between thirty seconds and five minutes per card). The SLA matrix classifies board history titles with a small model through the Message Batches API, at half the price, once a quarter; the keyword rules do the same offline.
+One model call per demand: a stable system prompt per area of about five thousand characters, which is on the order of 1,200 tokens, cached after the first call, plus the message and the lawyers' load in the user turn, and a short structured answer. Cents per demand at Sonnet-tier list prices, a few seconds per call. The sweep runs every fifteen minutes on business hours and a card reaches the decider within that window (the original's flow took between thirty seconds and five minutes per card). The SLA matrix classifies board history titles with a small model through the Message Batches API, at half the price, once a quarter; the keyword rules do the same offline.
 
 ## Known failure modes
 
@@ -118,7 +121,7 @@ In production the sweep sends the sender, the subject and the body of a demand (
 
 ## Tests & CI
 
-`uv run pytest` runs 49 tests offline: the filters and routes, the business-day calendar with holidays, the area configuration and its validation, the distribution rules, the three triagers (the Claude one with a fake client checking the structured-output request), the checks, the registry and the board, the card's inputs and recipients, the SLA matrix (percentiles, rules, the Batches classifier with a fake client), the sweep over the fourteen fixture messages, every decision path (as suggested, adjusted, discarded, the race, the reply modes, internal review), both closing paths, the metrics and the console's routes. CI runs lint, the tests, a check that the generated fixtures match their script, the demo walkthrough (the second sweep must send nothing, the second decision must be refused) and a gitleaks scan.
+`uv run pytest` runs 51 tests offline: the filters and routes, the business-day calendar with holidays, the area configuration and its validation, the distribution rules, the three triagers (the Claude one with a fake client checking the structured-output request), the checks, the registry and the board, the card's inputs and recipients, the SLA matrix (percentiles, rules, the Batches classifier with a fake client), the sweep over the fourteen fixture messages, every decision path (as suggested, adjusted, discarded, the race, the reply modes, internal review), both closing paths, the metrics and the console's routes. CI runs lint, the tests, a check that the generated fixtures match their script, the demo walkthrough (the second sweep must send nothing, the second decision must be refused) and a gitleaks scan.
 
 ## Stack
 
