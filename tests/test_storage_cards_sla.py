@@ -245,3 +245,22 @@ class TestSla:
             ][0]
             == "existing_case"
         )
+
+
+class TestCardEscaping:
+    """The card is JSON inside a <script> element, and its text comes from the sender."""
+
+    def test_a_subject_cannot_close_the_script_element(self, advisory):
+        # Subject, summary and client name are copied into the card from the incoming
+        # e-mail. "</script>" in any of them used to end the element early and put the rest
+        # of the sender's text into the document as markup.
+        hostile = "</script><img src=x onerror=alert(1)>"
+        d = demand(subject=hostile)
+        card = build_card(d, advisory)
+        html = card_html(card, d, "https://console.example")
+
+        assert "</script><img" not in html
+        assert "<\\/script>" in html
+
+        body = html.split('adaptivecard+json">', 1)[1].rsplit("</script>", 1)[0]
+        assert json.loads(body) == card, "the escape must not change the card"

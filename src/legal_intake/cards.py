@@ -44,7 +44,10 @@ def card_recipients(
         return [area.heads[0]]
     if is_forms_subject(subject):
         responder = forms_responder(subject)
-        if responder and settings.is_internal(responder):
+        # A lawyer of the area, not merely someone on the firm's domain: an intern who
+        # registers a demand through the form would otherwise become the sole recipient
+        # of the decision card, and the area's heads would never see it.
+        if responder and responder in area.lawyer_emails():
             return [responder]
     client = area.client_by_name(client_name) if client_name != NOT_IDENTIFIED else None
     if client and client.lead:
@@ -225,7 +228,11 @@ def card_html(card: dict, demand: Demand, console_url: str) -> str:
         f'<p><a href="{html.escape(console_url)}/cards/{demand.id}">Decide in the console</a>'
         " (open in Outlook to decide here).</p>"
     )
-    payload = json.dumps(card, ensure_ascii=False)
+    # Escape "</" so sender-controlled text cannot close the script element it is
+    # embedded in. Subject, summary and client name are all copied into the card from
+    # the incoming e-mail, so "</script><img src=x onerror=...>" in a subject line was
+    # enough to break out. JSON treats \/ as /, so the card is unchanged.
+    payload = json.dumps(card, ensure_ascii=False).replace("</", "<\\/")
     return (
         '<html><head><script type="application/adaptivecard+json">'
         f"{payload}</script></head><body>{fallback}</body></html>"
